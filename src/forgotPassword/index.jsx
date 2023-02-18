@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
 import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
 import { Link, useNavigate, Navigate } from "react-router-dom";
-import { Button as Btn } from "@mui/material";
-import {signInWithEmailAndPassword, onAuthStateChanged, getAuth} from 'firebase/auth'
+import {signInWithEmailAndPassword, onAuthStateChanged, getAuth, sendPasswordResetEmail} from 'firebase/auth'
 import { ref, child, get,getDatabase } from "firebase/database";
-import Dots from "react-activity/dist/Dots";
-import Bounce from "react-activity/dist/Bounce";
+// import Dots from "react-activity/dist/Dots";
+import { Bounce } from "react-activity";
 import app from '../firebaseConfig'
-import { CssBaseline, ThemeProvider } from "@mui/material";
+import { Button as Btn } from "@mui/material";
 
 
 const auth = getAuth(app)
-export default function Login() {
+export default function ForgotPassword() {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const [password, setPassword] = useState('');
@@ -37,44 +36,42 @@ export default function Login() {
 
 
 
-  async  function handleSignin (){
-      
+  async  function handleForgotPassword (){
+    // blessingsngalande10@gmail.com
     // const dbRef = ref(getDatabase());
     setLoading(true)
-    signInWithEmailAndPassword(auth, email, password)
-    .then((res)=>{
-      setLoading(false)
-      // console.log('name: ',res.user)
-      navigate('/home')
+    sendPasswordResetEmail(auth, email).then((res)=>{
+        alert('Password Reset Email has been sent')
+        setEmail(null)
+        setLoading(false)
+    }).catch((error)=>{
+        setLoading(false)
+        let code = error.message
+        if(code.includes('user-not-found')){
+            alert('The Provided Email is not registered to any account')
+        }else if(code.includes('invalid-email')){
+            alert('Enter a Valid email')
+        }else if(code.includes('missing-email')){
+            alert('Enter an email')
+        }else{
+            alert('Error occured')
+        }
+        
+        console.log(code)
     })
-    .catch((err)=>{
-      setLoading(false)
-      console.log('last: ',err.message)
-      let error = err.message
-      if(error.includes('invalid-email')){
-        alert('Enter a valid Email Address')
-      }else if(error.includes('wrong-password')){
-        alert('Wrong Password and email Combination')
-      }else{
-        alert('Wrong Email or Password')
-      }
-      // alert(err.message)
-    })
+    
     }
 
 
 
   return (
     <div style={{backgroundColor:'#001133'}}>
-      
     <Container>
-    
       <Row className="vh-100 d-flex justify-content-center align-items-center">
         <Col md={8} lg={6} xs={12}>
           {/* <div className="border border-3 border-primary"></div> */}
           <Card className="shadow">
             <Card.Body>
-          {/* <CssBaseline /> */}
               <div className="mb-3 mt-md-4">
               <img
                   className="rounded mx-auto d-block"
@@ -84,10 +81,10 @@ export default function Login() {
                   src={require('../assets/images/icon.png')}
                   style={{ cursor: "pointer", borderRadius: "50%", }}
                 />
-                <h2 className="fw-bold mb-5 text-uppercase text-center">Tokpay</h2>
-                <p className=" mb-5 text-start">Please enter your login and password!</p>
+                <h2 className="text-center mb-2 text-uppercase ">Reset Password</h2>
+                <p className=" mb-5 text-start">Please enter your registerd email to reset password!</p>
                 <div className="mb-3">
-                  <Form onSubmit={handleSignin}>
+                  <Form>
                     <Form.Group className="mb-3 text-start" controlId="formBasicEmail">
                       <Form.Label className="text-start">
                         Email address
@@ -95,33 +92,26 @@ export default function Login() {
                       <Form.Control type="email" placeholder="Enter email" value={email} onChange={handleChangeEmail} />
                     </Form.Group>
 
+                    
                     <Form.Group
-                      className="mb-3 text-start"
-                      controlId="formBasicPassword"
-                    >
-                      <Form.Label>Password</Form.Label>
-                      <Form.Control type="password" placeholder="Password" value={password} onChange={handleChangePassword} />
-                    </Form.Group>
-                    <Form.Group
-                      // className="mb-2"
-                      // controlId="formBasicCheckbox"
+                      className="mb-3"
+                      controlId="formBasicCheckbox"
                     >
                       <p className="small">
-                        <Btn onClick={()=> navigate('/forgot')}>
-
+                        <Btn onClick={()=> navigate('/login')}>
                           <a className="text-primary" >
-                            Forgot password?
+                            SignIn ?
                           </a>
                         </Btn>
                       </p>
                     </Form.Group>
                      {!loading ? (
 
-                        <Button disabled={loading} variant="primary" onClick={handleSignin} style={{padding:5, width:'100%'}}>
-                          Login
+                        <Button disabled={loading} variant="primary" onClick={handleForgotPassword} style={{padding:5, width:'100%'}}>
+                          Reset
                         </Button>
                         ) : (
-                        <Button disabled={loading} variant="primary"style={{padding:5, width:'100%'}}>
+                        <Button disabled={loading} variant="primary" style={{padding:5, width:'100%'}}>
                           <Bounce />
                         </Button>
                         )}

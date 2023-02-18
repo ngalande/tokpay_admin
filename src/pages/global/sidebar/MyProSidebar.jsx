@@ -1,13 +1,14 @@
 // docs https://github.com/azouaoui-med/react-pro-sidebar
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, Sidebar, MenuItem } from "react-pro-sidebar";
 import { useProSidebar } from "react-pro-sidebar";
-
+import { BiLogOut } from 'react-icons/bi';
 import { useSidebarContext } from "./sidebarContext";
-
-import { Link } from "react-router-dom";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import app from "../../../firebaseConfig";
+import { Link, useNavigate } from "react-router-dom";
 import { tokens } from "../../../theme";
-import { useTheme, Box, Typography, IconButton } from "@mui/material";
+import { useTheme, Box, Typography, IconButton, Button } from "@mui/material";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
@@ -39,6 +40,28 @@ const MyProSidebar = () => {
   const [selected, setSelected] = useState("Dashboard");
   const { sidebarRTL, setSidebarRTL, sidebarImage } = useSidebarContext();
   const { collapseSidebar, toggleSidebar, collapsed, broken } = useProSidebar();
+  const navigate = useNavigate();
+  const auth = getAuth(app)
+  const user =  auth.currentUser;
+
+
+  useEffect(()=>{
+    onAuthStateChanged(auth, (user) => {
+      if(user == null){
+        navigate('/login')
+        console.log(user.email)
+      }
+    })
+  },[])
+
+
+  const handleLogout =async()=>{
+    signOut(auth).then(() => {
+      navigate('/login')
+    }).catch((error)=>{
+      alert('Error Signing Out')
+    })
+  }
   return (
     <Box
       sx={{
@@ -198,6 +221,18 @@ const MyProSidebar = () => {
               setSelected={setSelected}
             />
             
+          </Box>
+          <Box 
+            textAlign="center"
+            // display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+                // ml="15px"
+                marginTop={'70px'}
+            >
+            <Button style={{position:'relative', alignSelf:'center'}} onClick={handleLogout}>
+              <BiLogOut size={50} color='red' />
+            </Button>
           </Box>
         </Menu>
       </Sidebar>

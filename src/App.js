@@ -3,6 +3,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { Routes, Route, Outlet } from "react-router-dom";
 import { MyProSidebarProvider } from "./pages/global/sidebar/sidebarContext";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "react-activity/dist/library.css";
 import Topbar from "./pages/global/Topbar";
 
 import Dashboard from "./pages/dashboard";
@@ -12,6 +13,7 @@ import Line from "./pages/revenue";
 import Pie from "./pages/transactionVolume";
 import Geography from "./pages/geography";
 import Login from "./login/login";
+import ForgotPassword from "./forgotPassword";
 
 const App = () => {
   const [theme, colorMode] = useMode();
@@ -48,6 +50,7 @@ const SidebarLayout = () => (
                 </Route>
                 <Route path="/" element={<Login />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/forgot" element={<ForgotPassword />} />
               </Routes>
             {/* </main> */}
           {/* </div> */}
