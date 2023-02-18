@@ -72,14 +72,7 @@ export default function Login() {
                       </Button>
                     </div>
                   </Form>
-                  <div className="mt-3">
-                    <p className="mb-0  text-center">
-                      Don't have an account?{" "}
-                      <a href="{''}" className="text-primary fw-bold">
-                        Sign Up
-                      </a>
-                    </p>
-                  </div>
+                  
                 </div>
               </div>
             </Card.Body>
