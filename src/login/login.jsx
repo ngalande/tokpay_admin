@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Col, Button, Row, Container, Card, Form } from "react-bootstrap";
 import { Link, useNavigate, Navigate } from "react-router-dom";
 import { Button as Btn } from "@mui/material";
@@ -8,22 +8,26 @@ import Dots from "react-activity/dist/Dots";
 import Bounce from "react-activity/dist/Bounce";
 import app from '../firebaseConfig'
 import { CssBaseline, ThemeProvider } from "@mui/material";
-
+import axios from "axios";
+import AuthContext from "../components/shared/authContext";
+import { LoadingContext } from "../components/shared/authContext";
+import { keys } from "../components/shared/variables";
 
 const auth = getAuth(app)
 export default function Login() {
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useContext(LoadingContext);
     const navigate = useNavigate();
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('')
-    const user =  auth.currentUser;
-  useEffect(()=>{
-    onAuthStateChanged(auth, (user) => {
-      // console.log(user.email)
+    const { login } = useContext(AuthContext)
+    const { user } = useContext(AuthContext);
+
+    useEffect(()=>{
       if(user){
         navigate('/home')
+        // console.log(user.email)
       }
-    })
+
   },[])
 
 
@@ -38,28 +42,14 @@ export default function Login() {
 
 
   async  function handleSignin (){
-      
-    // const dbRef = ref(getDatabase());
+
     setLoading(true)
-    signInWithEmailAndPassword(auth, email, password)
-    .then((res)=>{
-      setLoading(false)
-      // console.log('name: ',res.user)
-      navigate('/home')
-    })
-    .catch((err)=>{
-      setLoading(false)
-      console.log('last: ',err.message)
-      let error = err.message
-      if(error.includes('invalid-email')){
-        alert('Enter a valid Email Address')
-      }else if(error.includes('wrong-password')){
-        alert('Wrong Password and email Combination')
-      }else{
-        alert('Wrong Email or Password')
-      }
-      // alert(err.message)
-    })
+    let payload = {
+      email: email,
+      password: password
+    }
+    console.log(payload)
+    await login(payload)
     }
 
 

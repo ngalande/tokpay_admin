@@ -20,11 +20,71 @@ import GeographyChart from "../../components/GeographyChart";
 import BarChart from "../../components/growthRate";
 import StatBox from "../../components/StatBox";
 import ProgressCircle from "../../components/ProgressCircle";
+import { getFirestore, collection, getCountFromServer } from "firebase/firestore";
+import app from "../../firebaseConfig";
+import jwtInterceoptor from "../../components/shared/jwtInterceptor";
+import { keys } from "../../components/shared/variables";
+import { useEffect, useState } from "react";
+const db = getFirestore(app);
+const address = '0x1ec2901dcc51f7d2a636e12d6dd66268b8c22186'
 
 const Dashboard = () => {
+  const [userCount, setUserCount] = useState(null)
+  const [transactionCount, setTransactionCount] = useState(null)
+  const [transactions, setTransactions] = useState(null)
+  const [totalBalances, setTotlaBalances] = useState('')
   const theme = useTheme();
   const smScreen = useMediaQuery(theme.breakpoints.up("sm"));
   const colors = tokens(theme.palette.mode);
+  
+  useEffect(() => {
+    // setUsers(columns)
+    jwtInterceoptor
+      .get(keys.API_URL+'/user/getallusers')
+      .then((response) => {
+        // setMovies(response.data);
+        let count = Object.keys(response.data).length
+        setUserCount(count)
+        // console.log(count)
+
+      });
+      jwtInterceoptor
+      .get(keys.API_URL+'/trans/getalltransactions')
+      .then((response) => {
+        // setMovies(response.data);
+        let count = Object.keys(response.data).length
+        let data = response.data
+        setTransactionCount(count)
+        setTransactions(data)
+        console.log(data)
+
+      });
+      jwtInterceoptor
+      .get(keys.API_URL+'/wallet/getallbalances')
+      .then((response) => {
+        // setMovies(response.data);
+        // let count = Object.keys(response.data).length
+        let balance = response.data.balance
+        setTotlaBalances(balance)
+        // console.log(response.data.balance)
+
+      }).catch(err => {
+        // let status = err.response.status
+        if(err.response.status == 404){
+          // console.log(status)
+          setTotlaBalances(0)
+        }
+
+      })
+      // jwtInterceoptor
+      // .get(keys.API_URL+'/trans/getalltransactions')
+      // .then((response) => {
+      //   // let balance = response.data.balance
+      //   // setTotlaBalances(balance)
+      //   console.log(response.data)
+
+      // });
+  }, []);
   return (
     <Box m="20px">
       {/* HEADER */}
@@ -52,7 +112,7 @@ const Dashboard = () => {
             justifyContent="center"
           >
             <StatBox
-              title="431,225"
+              title={transactionCount}
               subtitle="Transactions Processed"
               progress="0.50"
               // increase="+21%"
@@ -73,12 +133,33 @@ const Dashboard = () => {
             justifyContent="center"
           >
             <StatBox
-              title="32,441"
+              title={userCount}
               subtitle="Total Users"
-              progress="0.30"
+              progress={userCount/100}
               // increase="+5%"
               icon={
                 <PersonAddIcon
+                  sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+                />
+              }
+            />
+          </Box>
+        </Grid>
+        <Grid xs={12} sm={12} md={6} lg={3} xl={3}>
+          <Box
+            width="100%"
+            backgroundColor={colors.primary[400]}
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <StatBox
+              title={'$ '+totalBalances}
+              subtitle="Total Users Account Balance"
+              progress="0.50"
+              // increase="+21%"
+              icon={
+                <PointOfSaleIcon
                   sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
                 />
               }
@@ -218,7 +299,7 @@ const Dashboard = () => {
                 Recent Transaction
               </Typography>
             </Box>
-            {mockTransactions.map((transaction, i) => {
+            {transactions?.map((transaction, i) => {
               return (
                 <Box
                   key={`${transaction}-${i}`}
@@ -234,19 +315,22 @@ const Dashboard = () => {
                       fontWeight="600"
                       color={colors.greenAccent[100]}
                     >
-                      {transaction.txId}
+                      {transaction.transactionHash}
                     </Typography>
                     <Typography color={colors.grey[100]}>
-                      {transaction.user}
+                      From: {transaction.senderName}
+                    </Typography>
+                    <Typography color={colors.grey[100]}>
+                      To: {transaction.receiverName}
                     </Typography>
                   </Box>
-                  <Box color={colors.grey[100]}>{transaction.date}</Box>
+                  <Box color={colors.grey[100]}>{Date(transaction.time).slice(4,21)}</Box>
                   <Box
                     color={colors.greenAccent[500]}
                     p="5px 10px"
                     borderRadius="4px"
                   >
-                    ${transaction.cost}
+                    ${transaction.amount}
                   </Box>
                 </Box>
               );

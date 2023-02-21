@@ -39,26 +39,26 @@ export default function ForgotPassword() {
   async  function handleForgotPassword (){
     // blessingsngalande10@gmail.com
     // const dbRef = ref(getDatabase());
-    setLoading(true)
-    sendPasswordResetEmail(auth, email).then((res)=>{
-        alert('Password Reset Email has been sent')
-        setEmail(null)
-        setLoading(false)
-    }).catch((error)=>{
-        setLoading(false)
-        let code = error.message
-        if(code.includes('user-not-found')){
-            alert('The Provided Email is not registered to any account')
-        }else if(code.includes('invalid-email')){
-            alert('Enter a Valid email')
-        }else if(code.includes('missing-email')){
-            alert('Enter an email')
-        }else{
-            alert('Error occured')
-        }
+    // setLoading(true)
+    // sendPasswordResetEmail(auth, email).then((res)=>{
+    //     alert('Password Reset Email has been sent')
+    //     setEmail(null)
+    //     setLoading(false)
+    // }).catch((error)=>{
+    //     setLoading(false)
+    //     let code = error.message
+    //     if(code.includes('user-not-found')){
+    //         alert('The Provided Email is not registered to any account')
+    //     }else if(code.includes('invalid-email')){
+    //         alert('Enter a Valid email')
+    //     }else if(code.includes('missing-email')){
+    //         alert('Enter an email')
+    //     }else{
+    //         alert('Error occured')
+    //     }
         
-        console.log(code)
-    })
+    //     console.log(code)
+    // })
     
     }
 

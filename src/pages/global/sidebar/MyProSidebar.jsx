@@ -1,5 +1,5 @@
 // docs https://github.com/azouaoui-med/react-pro-sidebar
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Menu, Sidebar, MenuItem } from "react-pro-sidebar";
 import { useProSidebar } from "react-pro-sidebar";
 import { BiLogOut } from 'react-icons/bi';
@@ -17,6 +17,7 @@ import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutl
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import AuthContext from "../../../components/shared/authContext";
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -42,16 +43,16 @@ const MyProSidebar = () => {
   const { collapseSidebar, toggleSidebar, collapsed, broken } = useProSidebar();
   const navigate = useNavigate();
   const auth = getAuth(app)
-  const user =  auth.currentUser;
+  const { user, logout } = useContext(AuthContext);
 
 
   useEffect(()=>{
-    onAuthStateChanged(auth, (user) => {
-      if(user == null){
+    // console.log(user)
+      if(!user){
         navigate('/login')
-        console.log(user.email)
+        // console.log(user.email)
       }
-    })
+
   },[])
 
 
@@ -163,11 +164,13 @@ const MyProSidebar = () => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  Code Pappi
+                 {/* {!user ? (navigate('/')) : (user.name)} */}
+                 {user?.name}
                 </Typography>
               </Box>
             </Box>
           )}
+          
           <Box paddingLeft={collapsed ? undefined : "10%"}>
             <Item
               title="Dashboard"
@@ -230,7 +233,7 @@ const MyProSidebar = () => {
                 // ml="15px"
                 marginTop={'70px'}
             >
-            <Button style={{position:'relative', alignSelf:'center'}} onClick={handleLogout}>
+            <Button style={{position:'relative', alignSelf:'center'}} onClick={() => logout()}>
               <BiLogOut size={50} color='red' />
             </Button>
           </Box>

@@ -14,6 +14,8 @@ import Pie from "./pages/transactionVolume";
 import Geography from "./pages/geography";
 import Login from "./login/login";
 import ForgotPassword from "./forgotPassword";
+import authVerify from "./common/authVerify";
+import { AuthContextProvider } from "./components/shared/authContext";
 
 const App = () => {
   const [theme, colorMode] = useMode();
@@ -32,6 +34,7 @@ const SidebarLayout = () => (
   </>
 );
   return (
+    <AuthContextProvider>
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         {/* <CssBaseline /> */}
@@ -57,6 +60,7 @@ const SidebarLayout = () => (
         {/* </MyProSidebarProvider> */}
       </ThemeProvider>
     </ColorModeContext.Provider>
+    </AuthContextProvider>
   );
 };
 
