@@ -48,7 +48,7 @@ export default function Login() {
       email: email,
       password: password
     }
-    console.log(payload)
+    // console.log(payload)
     await login(payload)
     }
 

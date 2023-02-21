@@ -24,7 +24,9 @@ import { getFirestore, collection, getCountFromServer } from "firebase/firestore
 import app from "../../firebaseConfig";
 import jwtInterceoptor from "../../components/shared/jwtInterceptor";
 import { keys } from "../../components/shared/variables";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import AuthContext from "../../components/shared/authContext";
+import { useNavigate } from "react-router-dom";
 const db = getFirestore(app);
 const address = '0x1ec2901dcc51f7d2a636e12d6dd66268b8c22186'
 
@@ -33,56 +35,86 @@ const Dashboard = () => {
   const [transactionCount, setTransactionCount] = useState(null)
   const [transactions, setTransactions] = useState(null)
   const [totalBalances, setTotlaBalances] = useState('')
+  const { user, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
   const theme = useTheme();
   const smScreen = useMediaQuery(theme.breakpoints.up("sm"));
   const colors = tokens(theme.palette.mode);
   
   useEffect(() => {
     // setUsers(columns)
-    jwtInterceoptor
-      .get(keys.API_URL+'/user/getallusers')
-      .then((response) => {
-        // setMovies(response.data);
-        let count = Object.keys(response.data).length
-        setUserCount(count)
-        // console.log(count)
+    if(!user){
+      navigate('/login')
+      // console.log(user.email)
+    }else{
 
-      });
       jwtInterceoptor
-      .get(keys.API_URL+'/trans/getalltransactions')
-      .then((response) => {
-        // setMovies(response.data);
-        let count = Object.keys(response.data).length
-        let data = response.data
-        setTransactionCount(count)
-        setTransactions(data)
-        console.log(data)
+        .get(keys.API_URL+'/user/getallusers')
+        .then((response) => {
+          // setMovies(response.data);
+          let count = Object.keys(response.data).length
+          setUserCount(count)
+          // console.log(count)
+  
+        }).catch(err => {
+          // let status = err.response.status
+          console.log(err)
+  
+        })
+  
+        jwtInterceoptor
+        .get(keys.API_URL+'/trans/getalltransactions')
+        .then((response) => {
+          // setMovies(response.data);
+          let count = Object.keys(response.data).length
+          let data = response.data
+          setTransactionCount(count)
+          setTransactions(data)
+          // console.log(data)
+  
+        }).catch(err => {
+          // let status = err.response.status
+          console.log(err)
+  
+        })
+  
+        jwtInterceoptor
+        .get(keys.API_URL+'/wallet/getallbalances')
+        .then((response) => {
+          // setMovies(response.data);
+          // let count = Object.keys(response.data).length
+          let balance = response.data.balance
+          setTotlaBalances(balance)
+          // console.log(response.data.balance)
+  
+        }).catch(err => {
+          // let status = err.response.status
+          if(err.response.status == 404){
+            // console.log(status)
+            setTotlaBalances(0)
+          }
+  
+        })
+    }
+    
 
-      });
-      jwtInterceoptor
-      .get(keys.API_URL+'/wallet/getallbalances')
-      .then((response) => {
-        // setMovies(response.data);
-        // let count = Object.keys(response.data).length
-        let balance = response.data.balance
-        setTotlaBalances(balance)
-        // console.log(response.data.balance)
 
-      }).catch(err => {
-        // let status = err.response.status
-        if(err.response.status == 404){
-          // console.log(status)
-          setTotlaBalances(0)
-        }
-
-      })
-      // jwtInterceoptor
-      // .get(keys.API_URL+'/trans/getalltransactions')
-      // .then((response) => {
-      //   // let balance = response.data.balance
-      //   // setTotlaBalances(balance)
-      //   console.log(response.data)
-
+     
+      // console.log(decoded - dateNow.getTime()) 
+      //  {
+      //   if (err) {
+      //     console.log(err)
+      //     /*
+      //       err = {
+      //         name: 'TokenExpiredError',
+      //         message: 'jwt expired',
+      //         expiredAt: 1408621000
+      //       }
+      //     */
+      //   }
+      //   else{
+      //     console.log('test: ',decoded)
+      //   }
       // });
   }, []);
   return (

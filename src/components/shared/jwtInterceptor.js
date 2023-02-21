@@ -8,7 +8,9 @@ jwtInterceoptor.interceptors.request.use(
         config.headers = config.headers ?? {};
         // console.log(tokensData)
         // Now config.headers can be safely used
-        config.headers.Authorization = tokensData.token
+        if(tokensData){
+          config.headers.Authorization = tokensData.token
+        }
     
         return config;
       },

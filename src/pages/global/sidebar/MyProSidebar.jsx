@@ -13,7 +13,7 @@ import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
-
+import jwt_decode from "jwt-decode";
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
@@ -44,6 +44,7 @@ const MyProSidebar = () => {
   const navigate = useNavigate();
   const auth = getAuth(app)
   const { user, logout } = useContext(AuthContext);
+  const [validToken, setValidToken] = useState(true)
 
 
   useEffect(()=>{
@@ -51,18 +52,26 @@ const MyProSidebar = () => {
       if(!user){
         navigate('/login')
         // console.log(user.email)
+      }else{
+
+        var dateNow  = new Date()
+        const token = localStorage.getItem('tokens')
+        const decoded = jwt_decode(token)
+        if(decoded.exp * 1000 < dateNow.getTime()){
+          console.log('expired')
+          setValidToken(false)
+          logout()
+        }else{
+          console.log('Token is valid')
+          console.log(decoded.exp * 1000 - dateNow.getTime())
+          setValidToken(true)
+        }
       }
+
 
   },[])
 
 
-  const handleLogout =async()=>{
-    signOut(auth).then(() => {
-      navigate('/login')
-    }).catch((error)=>{
-      alert('Error Signing Out')
-    })
-  }
   return (
     <Box
       sx={{
