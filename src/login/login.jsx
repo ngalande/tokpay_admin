@@ -23,6 +23,7 @@ export default function Login() {
     const { user } = useContext(AuthContext);
 
     useEffect(()=>{
+      console.log('user')
       if(user){
         navigate('/home')
         // console.log(user.email)
@@ -43,14 +44,23 @@ export default function Login() {
 
   async  function handleSignin (){
 
-    setLoading(true)
-    let payload = {
-      email: email,
-      password: password
-    }
-    // console.log(payload)
-    await login(payload)
-    }
+      if(!email){
+        alert('Email is Required')
+      }else if(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)){
+        alert('Enter a Valid email address')
+      }else{
+
+        setLoading(true)
+        let payload = {
+          email: email,
+          password: password
+        }
+        // console.log(payload)
+        await login(payload)
+        }
+      }
+
+
 
 
 

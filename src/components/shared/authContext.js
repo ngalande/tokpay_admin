@@ -31,11 +31,11 @@ export const AuthContextProvider = ({ children }) => {
         navigate("/home");
       }).catch(err =>{
         setLoading(false)
-        let status = err.response.status
+        // let status = err.response.status
         // console.log(err.response.status)
-        if(status == 404){
+        if(err.response.status == 404){
             alert('Account does not Exist')
-        }else if(status == 400){
+        }else if(err.response.status == 400){
             alert('Incorrect password/email')
 
         }else{

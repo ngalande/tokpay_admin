@@ -8,9 +8,9 @@ import Topbar from "./pages/global/Topbar";
 
 import Dashboard from "./pages/dashboard";
 import Users from "./pages/users";
-import Bar from "./pages/growthRate";
-import Line from "./pages/revenue";
-import Pie from "./pages/transactionVolume";
+import RateBar from "./pages/growthRate";
+import Revenue from "./pages/revenue";
+import TransVolume from "./pages/transactionVolume";
 import Geography from "./pages/geography";
 import Login from "./login/login";
 import ForgotPassword from "./forgotPassword";
@@ -47,9 +47,9 @@ const SidebarLayout = () => (
                 <Route element={<SidebarLayout />} >
                   <Route path="/home" element={<Dashboard />} />
                   <Route path="/users" element={<Users />} />
-                  <Route path="/bar" element={<Bar />} />
-                  <Route path="/pie" element={<Pie />} />
-                  <Route path="/line" element={<Line />} />
+                  <Route path="/grownthrate" element={<RateBar />} />
+                  <Route path="/transvolume" element={<TransVolume />} />
+                  <Route path="/revenue" element={<Revenue />} />
                   <Route path="/geography" element={<Geography />} />
                 </Route>
                 <Route path="/" element={<Login />} />

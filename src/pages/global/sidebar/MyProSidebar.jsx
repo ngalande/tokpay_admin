@@ -50,10 +50,10 @@ const MyProSidebar = () => {
   useEffect(()=>{
     // console.log(user)
       if(!user){
+        logout()
         navigate('/login')
         // console.log(user.email)
       }else{
-
         var dateNow  = new Date()
         const token = localStorage.getItem('tokens')
         const decoded = jwt_decode(token)
@@ -213,26 +213,25 @@ const MyProSidebar = () => {
             </Typography>
             <Item
               title="Growth Rate"
-              to="/bar"
+              to="/grownthrate"
               icon={<BarChartOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Transaction Volume"
-              to="/pie"
+              to="/transvolume"
               icon={<PieChartOutlineOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
               title="Revenue Generated"
-              to="/line"
+              to="/revenue"
               icon={<TimelineOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
-            
           </Box>
           <Box 
             textAlign="center"

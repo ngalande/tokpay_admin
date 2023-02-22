@@ -44,10 +44,11 @@ const Dashboard = () => {
   useEffect(() => {
     // setUsers(columns)
     if(!user){
+      logout()
       navigate('/login')
       // console.log(user.email)
     }else{
-
+      // console.log('went on ///////')
       jwtInterceoptor
         .get(keys.API_URL+'/user/getallusers')
         .then((response) => {
@@ -59,6 +60,7 @@ const Dashboard = () => {
         }).catch(err => {
           // let status = err.response.status
           console.log(err)
+          // logout()
   
         })
   
@@ -75,7 +77,7 @@ const Dashboard = () => {
         }).catch(err => {
           // let status = err.response.status
           console.log(err)
-  
+          // logout()
         })
   
         jwtInterceoptor
@@ -92,30 +94,13 @@ const Dashboard = () => {
           if(err.response.status == 404){
             // console.log(status)
             setTotlaBalances(0)
+            // navigate('/home')
           }
   
         })
     }
     
 
-
-     
-      // console.log(decoded - dateNow.getTime()) 
-      //  {
-      //   if (err) {
-      //     console.log(err)
-      //     /*
-      //       err = {
-      //         name: 'TokenExpiredError',
-      //         message: 'jwt expired',
-      //         expiredAt: 1408621000
-      //       }
-      //     */
-      //   }
-      //   else{
-      //     console.log('test: ',decoded)
-      //   }
-      // });
   }, []);
   return (
     <Box m="20px">
