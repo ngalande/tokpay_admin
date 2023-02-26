@@ -49,7 +49,7 @@ const Dashboard = () => {
       // console.log(user.email)
     }else{
       // console.log('went on ///////')
-      jwtInterceoptor
+      const getData =()=> {jwtInterceoptor
         .get(keys.API_URL+'/user/getallusers')
         .then((response) => {
           // setMovies(response.data);
@@ -90,6 +90,7 @@ const Dashboard = () => {
           // console.log(response.data.balance)
   
         }).catch(err => {
+          console.log(err.message)
           // let status = err.response.status
           if(err.response.status == 404){
             // console.log(status)
@@ -97,7 +98,11 @@ const Dashboard = () => {
             // navigate('/home')
           }
   
-        })
+        })}
+        const interval = setInterval(()=>{
+          getData()
+        }, 10000)
+        return () => clearInterval(interval)
     }
     
 
@@ -332,7 +337,7 @@ const Dashboard = () => {
                       fontWeight="600"
                       color={colors.greenAccent[100]}
                     >
-                      {transaction.transactionHash}
+                      {transaction?.transactionHash.substring(0, 10).concat('...')}
                     </Typography>
                     <Typography color={colors.grey[100]}>
                       From: {transaction.senderName}
