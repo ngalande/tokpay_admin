@@ -370,7 +370,8 @@ const Dashboard = () => {
                       To: {transaction.receiverName}
                     </Typography>
                   </Box>
-                  <Box color={colors.grey[100]}>{Date(transaction.time).slice(4,21)}</Box>
+                  <Box color={colors.grey[100]}>{new Date(Number(transaction?.time)).toString().slice(4,21)}</Box>
+                  {/* <Box color={colors.grey[100]}>{new Date(Number(transaction?.time)).toString()}</Box> */}
                   <Box
                     color={colors.greenAccent[500]}
                     p="5px 10px"
