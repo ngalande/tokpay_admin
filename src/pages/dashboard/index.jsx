@@ -35,6 +35,7 @@ const Dashboard = () => {
   const [transactionCount, setTransactionCount] = useState(null)
   const [transactions, setTransactions] = useState(null)
   const [totalBalances, setTotlaBalances] = useState('')
+  const [revenue, setRevenue] = useState('')
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
   const theme = useTheme();
@@ -49,7 +50,8 @@ const Dashboard = () => {
       // console.log(user.email)
     }else{
       // console.log('went on ///////')
-      const getData =()=> {jwtInterceoptor
+      const getData =()=> {
+        jwtInterceoptor
         .get(keys.API_URL+'/user/getallusers')
         .then((response) => {
           // setMovies(response.data);
@@ -98,7 +100,29 @@ const Dashboard = () => {
             // navigate('/home')
           }
   
-        })}
+        })
+
+        //get master balance
+        jwtInterceoptor
+        .get(keys.API_URL+'/wallet/getmasterbalance')
+        .then((response) => {
+          // setMovies(response.data);
+          // let count = Object.keys(response.data).length
+          let balance = response.data.balance
+          setRevenue(balance)
+          // console.log(balance)
+  
+        }).catch(err => {
+          console.log(err.message)
+          // let status = err.response.status
+          if(err.response.status == 404){
+            // console.log(status)
+            setRevenue(0)
+            // navigate('/home')
+          }
+  
+        })
+      }
         const interval = setInterval(()=>{
           getData()
         }, 10000)
@@ -197,7 +221,7 @@ const Dashboard = () => {
             justifyContent="center"
           >
             <StatBox
-              title="1,325,134"
+              title={'$ '+revenue}
               subtitle="Total Revenue Generated"
               progress="0.80"
               // increase="+43%"
