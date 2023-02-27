@@ -200,7 +200,7 @@ const Dashboard = () => {
             justifyContent="center"
           >
             <StatBox
-              title={'$ '+totalBalances}
+              title={'$ '+Number(totalBalances).toFixed(3)}
               subtitle="Total Users Account Balance"
               progress="0.50"
               // increase="+21%"
