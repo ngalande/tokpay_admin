@@ -8,6 +8,8 @@ import Topbar from "./pages/global/Topbar";
 
 import Dashboard from "./pages/dashboard";
 import Users from "./pages/users";
+import Enquiry from "./pages/enquiry";
+import Settled from "./pages/enquiry/settled";
 import RateBar from "./pages/growthRate";
 import Revenue from "./pages/revenue";
 import TransVolume from "./pages/transactionVolume";
@@ -17,7 +19,7 @@ import ForgotPassword from "./forgotPassword";
 // import authVerify from "./common/authVerify";
 import { AuthContextProvider } from "./components/shared/authContext";
 import AuthVerify from "./common/authVerify";
-
+import 'reactjs-popup/dist/index.css';
 const App = () => {
   const [theme, colorMode] = useMode();
   
@@ -38,6 +40,7 @@ const SidebarLayout = () => (
     <AuthContextProvider>
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
+        
         {/* <CssBaseline /> */}
         {/* <MyProSidebarProvider> */}
           {/* <div style={{ height: "100%", width: "100%" }}> */}
@@ -47,6 +50,8 @@ const SidebarLayout = () => (
                 <Route element={<SidebarLayout />} >
                   <Route path="/home" element={<Dashboard />} />
                   <Route path="/users" element={<Users />} />
+                  <Route path="/enquiry" element={<Enquiry />} />
+                  <Route path="/settled" element={<Settled />} />
                   <Route path="/grownthrate" element={<RateBar />} />
                   <Route path="/transvolume" element={<TransVolume />} />
                   <Route path="/revenue" element={<Revenue />} />
@@ -63,6 +68,7 @@ const SidebarLayout = () => (
       </ThemeProvider>
     </ColorModeContext.Provider>
     </AuthContextProvider>
+    
   );
 };
 

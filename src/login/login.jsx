@@ -29,7 +29,7 @@ export default function Login() {
         // console.log(user.email)
       }
 
-  },[])
+  },[user])
 
 
     const handleChangeEmail = (text) => {

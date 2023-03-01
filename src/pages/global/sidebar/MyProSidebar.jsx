@@ -11,6 +11,8 @@ import { tokens } from "../../../theme";
 import { useTheme, Box, Typography, IconButton, Button } from "@mui/material";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
+import Sms from "@mui/icons-material/Sms";
+import MarkChatReadIcon from '@mui/icons-material/MarkChatRead';
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
 import jwt_decode from "jwt-decode";
@@ -59,6 +61,8 @@ const MyProSidebar = () => {
         const decoded = jwt_decode(token)
         if(decoded.exp * 1000 < dateNow.getTime()){
           console.log('expired')
+          logout()
+        navigate('/login')
           setValidToken(false)
           logout()
         }else{
@@ -200,6 +204,27 @@ const MyProSidebar = () => {
               title="View Users"
               to="/users"
               icon={<PeopleOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Typography
+              variant="h6"
+              color={colors.grey[300]}
+              sx={{ m: "15px 20px 5px 20px" }}
+            >
+              Support & Help
+            </Typography>
+            <Item
+              title="Pending Enquiries"
+              to="/enquiry"
+              icon={<Sms />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Settled Enquiries"
+              to="/settled"
+              icon={<MarkChatReadIcon />}
               selected={selected}
               setSelected={setSelected}
             />
