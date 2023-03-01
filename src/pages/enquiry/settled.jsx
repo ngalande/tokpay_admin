@@ -54,7 +54,7 @@ const Settled = () => {
     { field: "id", headerName: "Id" },
     { field: "email", headerName: "Email", width: 200 },
     { field: "subject", headerName: "Subject", width: 200 },
-    { field: "message", headerName: "Message", width: 200 },
+    { field: "message", headerName: "Message", width: 500 },
     { field: "status", headerName: "Status", width: 200 },
 
   ];

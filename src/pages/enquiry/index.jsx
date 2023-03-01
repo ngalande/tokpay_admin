@@ -54,7 +54,7 @@ const Enquiry = () => {
     { field: "id", headerName: "Id" },
     { field: "email", headerName: "Email", width: 200 },
     { field: "subject", headerName: "Subject", width: 200 },
-    { field: "message", headerName: "Message", width: 200 },
+    { field: "message", headerName: "Message", width: 500 },
     { field: "status", headerName: "Status", width: 200 },
     {
         field: "action", 
@@ -103,26 +103,34 @@ const Enquiry = () => {
     // console.log(email)
   }
   const handleSubmit = () =>{
-    const payload = {
-      email: data?.email,
-      subject: subject,
-      message: message,
-      userSubject: data?.subject
-    }
-    jwtInterceoptor
-      .post(keys.API_URL+'/enquiry/response', payload )
-      .then((response) => {
-        setLoading(true)
-        // setMovies(response.data);
-        console.log(response.data)
-        alert('Response sent Successfully')
-        // console.log(Object.keys(response.data).length)
-        setOpen(false);
+    if(!subject || !message){
+      alert('Enter valid details')
+    }else{
 
-      }).catch(err => {
-        setLoading(false)
-        console.log(err)
-      })
+      setLoading(true)
+      const payload = {
+        email: data?.email,
+        subject: subject,
+        message: message,
+        userSubject: data?.subject
+      }
+      jwtInterceoptor
+        .post(keys.API_URL+'/enquiry/response', payload )
+        .then((response) => {
+          setLoading(false)
+          // setMovies(response.data);
+          console.log(response.data)
+          alert('Response sent Successfully')
+          // console.log(Object.keys(response.data).length)
+          setOpen(false);
+          setSubject(null)
+          setMessage(null)
+  
+        }).catch(err => {
+          setLoading(false)
+          console.log(err)
+        })
+    }
   }
 
   return (
