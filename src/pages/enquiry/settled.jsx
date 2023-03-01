@@ -64,7 +64,6 @@ const Settled = () => {
     jwtInterceoptor
       .get(keys.API_URL+'/enquiry/settled')
       .then((response) => {
-        // setMovies(response.data);
         setEnquiries(response.data)
         // console.log(Object.keys(response.data).length)
 
