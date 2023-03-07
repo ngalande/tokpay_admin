@@ -121,6 +121,14 @@ const Enquiry = () => {
           // setMovies(response.data);
           console.log(response.data)
           alert('Response sent Successfully')
+          jwtInterceoptor
+            .get(keys.API_URL+'/enquiry/getEnquiries')
+            .then((response) => {
+              // setMovies(response.data);
+              setEnquiries(response.data)
+              // console.log(Object.keys(response.data).length)
+
+            });
           // console.log(Object.keys(response.data).length)
           setOpen(false);
           setSubject(null)

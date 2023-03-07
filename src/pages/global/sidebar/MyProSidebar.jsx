@@ -66,8 +66,8 @@ const MyProSidebar = () => {
           setValidToken(false)
           logout()
         }else{
-          console.log('Token is valid')
-          console.log(decoded.exp * 1000 - dateNow.getTime())
+          // console.log('Token is valid')
+          // console.log(decoded.exp * 1000 - dateNow.getTime())
           setValidToken(true)
         }
       }
