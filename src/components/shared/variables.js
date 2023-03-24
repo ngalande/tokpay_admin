@@ -1,3 +1,3 @@
 exports.keys = {
-    API_URL : 'https://api.tokpayapp.com/api/v1/'
+    API_URL : 'https://api.tokpayapp.com/api/v1'
 }
