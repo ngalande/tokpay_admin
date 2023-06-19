@@ -32,14 +32,20 @@ export const AuthContextProvider = ({ children }) => {
       }).catch(err =>{
         setLoading(false)
         // let status = err.response.status
-        // console.log(err.response.status)
-        if(err.response.status == 404){
-            alert('Account does not Exist')
-        }else if(err.response.status == 400){
-            alert('Incorrect password/email')
+        console.log(err)
+        if(err.response){
 
+          if(err.response.status == 404){
+              alert('Account does not Exist')
+          }else if(err.response.status == 400){
+              alert('Incorrect password/email')
+  
+          }else{
+              alert('Internal Error Occurred')
+          }
         }else{
-            alert('Internal Error Occurred')
+          alert('Internal Error Occurred')
+
         }
       })
 
