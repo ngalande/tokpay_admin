@@ -257,18 +257,20 @@ const MyProSidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-          </Box>
-          <Box 
-            textAlign="center"
-            // display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-                // ml="15px"
-                marginTop={'70px'}
-            >
-            <Button style={{position:'relative', alignSelf:'center'}} onClick={() => logout()}>
-              <BiLogOut size={50} color='red' />
-            </Button>
+            <div
+              style={{
+                background: "#fff",
+                height: "0.3px",
+                marginTop: "10px",
+                marginBottom: "10px",
+              }}
+            >{/*White divider */}</div>
+            <div onClick={() => logout()}>
+              <Item
+                title="Log Out"
+                icon={<BiLogOut size={24} color="red" />}
+              />
+            </div>
           </Box>
         </Menu>
       </Sidebar>
