@@ -55,7 +55,7 @@ export default function Login() {
           email: email,
           password: password
         }
-        // console.log(payload)
+
         await login(payload)
         }
       }
@@ -71,7 +71,6 @@ export default function Login() {
     
       <Row className="vh-100 d-flex justify-content-center align-items-center">
         <Col md={8} lg={6} xs={12}>
-          {/* <div className="border border-3 border-primary"></div> */}
           <Card className="shadow">
             <Card.Body>
           {/* <CssBaseline /> */}
