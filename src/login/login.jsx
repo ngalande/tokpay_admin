@@ -55,7 +55,7 @@ export default function Login() {
           email: email,
           password: password
         }
-        // console.log(payload)
+
         await login(payload)
         }
       }
@@ -71,7 +71,6 @@ export default function Login() {
     
       <Row className="vh-100 d-flex justify-content-center align-items-center">
         <Col md={8} lg={6} xs={12}>
-          {/* <div className="border border-3 border-primary"></div> */}
           <Card className="shadow">
             <Card.Body>
           {/* <CssBaseline /> */}
@@ -85,12 +84,12 @@ export default function Login() {
                   style={{ cursor: "pointer", borderRadius: "50%", }}
                 />
                 <h2 className="fw-bold mb-5 text-uppercase text-center">Tokpay</h2>
-                <p className=" mb-5 text-start">Please enter your login and password!</p>
+                <p className=" mb-5 text-center">Please enter email and password</p>
                 <div className="mb-3">
                   <Form onSubmit={handleSignin}>
                     <Form.Group className="mb-3 text-start" controlId="formBasicEmail">
                       <Form.Label className="text-start">
-                        Email address
+                        Email
                       </Form.Label>
                       <Form.Control type="email" placeholder="Enter email" value={email} onChange={handleChangeEmail} />
                     </Form.Group>
