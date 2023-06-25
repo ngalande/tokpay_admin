@@ -212,7 +212,7 @@ const MyProSidebar = () => {
               color={colors.grey[300]}
               sx={{ m: "15px 20px 5px 20px" }}
             >
-              Support & Help
+              Enquiries
             </Typography>
             <Item
               title="Pending Enquiries"
@@ -234,7 +234,7 @@ const MyProSidebar = () => {
               color={colors.grey[300]}
               sx={{ m: "15px 20px 5px 20px" }}
             >
-              Stats
+              Stastistis
             </Typography>
             <Item
               title="Growth Rate"

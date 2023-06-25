@@ -85,31 +85,31 @@ export default function Login() {
                   style={{ cursor: "pointer", borderRadius: "50%", }}
                 />
                 <h2 className="fw-bold mb-5 text-uppercase text-center">Tokpay</h2>
-                <p className=" mb-5 text-start">Please enter your login and password!</p>
+                <p className=" mb-5 text-center"> Enter Email and Password</p>
                 <div className="mb-3">
                   <Form onSubmit={handleSignin}>
                     <Form.Group className="mb-3 text-start" controlId="formBasicEmail">
-                      <Form.Label className="text-start">
-                        Email address
+                      <Form.Label className="fw-bold ">
+                        Email
                       </Form.Label>
-                      <Form.Control type="email" placeholder="Enter email" value={email} onChange={handleChangeEmail} />
+                      <Form.Control type="email" placeholder="Email" value={email} onChange={handleChangeEmail} />
                     </Form.Group>
 
                     <Form.Group
                       className="mb-3 text-start"
                       controlId="formBasicPassword"
                     >
-                      <Form.Label>Password</Form.Label>
+                      <Form.Label className="fw-bold">Password</Form.Label>
                       <Form.Control type="password" placeholder="Password" value={password} onChange={handleChangePassword} />
                     </Form.Group>
                     <Form.Group
                       // className="mb-2"
                       // controlId="formBasicCheckbox"
                     >
-                      <p className="small">
+                      <p className="small ">
                         <Btn onClick={()=> navigate('/forgot')}>
 
-                          <a className="text-primary" >
+                          <a className="text-primary" style={{textDecoration:"center",paddingTop:"10px"}}>
                             Forgot password?
                           </a>
                         </Btn>
