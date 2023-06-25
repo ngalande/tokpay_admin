@@ -84,7 +84,7 @@ export default function Login() {
                   style={{ cursor: "pointer", borderRadius: "50%", }}
                 />
                 <h2 className="fw-bold mb-5 text-uppercase text-center">Tokpay</h2>
-                <p className=" mb-5 text-start">Please enter your login and password!</p>
+                <p className=" mb-5 text-start text-center">Please login </p>
                 <div className="mb-3">
                   <Form onSubmit={handleSignin}>
                     <Form.Group className="mb-3 text-start" controlId="formBasicEmail">
